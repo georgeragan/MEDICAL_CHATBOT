@@ -1,0 +1,13 @@
+langchain
+ipykernel
+python-dotenv
+langchain_community
+pypdf
+langchain-text-splitters
+sentence_transformers
+langchain_huggingface
+langchain-groq
+langchain-experimental
+pinecone-client==2.2.4
+langchain-pinecone
+flask
