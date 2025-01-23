@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+    async function sendMessage() {
+      const messageInput = document.getElementById("messageInput");
+      const userMessage = messageInput.value.trim();
+      if (!userMessage) return;
+
+      // Add user message to chat
+      addMessage(userMessage, "user");
+
+      // Clear input field
+      messageInput.value = "";
+
+      // Send message to the server
+      try {
+        const response = await fetch("/get", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `msg=${encodeURIComponent(userMessage)}`,
+        });
+
+        const botResponse = await response.text();
+        addMessage(botResponse, "bot");
+      } catch (error) {
+        addMessage("Error: Unable to get a response. Please try again.", "bot");
+      }
+    }
+
+    function addMessage(content, sender) {
+      const chatBody = document.getElementById("chatBody");
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", sender);
+      messageDiv.textContent = content;
+      chatBody.appendChild(messageDiv);
+      chatBody.scrollTop = chatBody.scrollHeight; // Auto-scroll to the bottom
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const sendButton = document.getElementById("sendButton");
+      const messageInput = document.getElementById("messageInput");
+
+      sendButton.addEventListener("click", sendMessage);
+
+      messageInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">RAG Chatbot</div>
+    <div class="chat-body" id="chatBody">
+      <div class="message bot">Hi! How can I assist you today?</div>
+    </div>
+    <div class="chat-footer">
+      <input
+        type="text"
+        id="messageInput"
+        class="input-field"
+        placeholder="Type your message..."
+      />
+      <button id="sendButton" class="send-button">Send</button>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+setup.py
+STATITICS_CHAT_BOT.egg-info/PKG-INFO
+STATITICS_CHAT_BOT.egg-info/SOURCES.txt
+STATITICS_CHAT_BOT.egg-info/dependency_links.txt
+STATITICS_CHAT_BOT.egg-info/top_level.txt
+src/__init__.py
+src/helper.py
+src/prompt.py

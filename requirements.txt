@@ -11,4 +11,6 @@ langchain-experimental
 pinecone-client==2.2.4
 langchain-pinecone
 flask
+faiss-cpu
+pymilvus
 -e .
